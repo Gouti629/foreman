@@ -136,9 +136,6 @@ def main():
     st.set_page_config(page_title="Foreman", page_icon="\U0001F4CB", layout="wide")
     init_data()
 
-    if "selected_id" not in st.session_state:
-        st.session_state.selected_id = None
-
     st.sidebar.title("Foreman")
     st.sidebar.caption("Insurance submission review — multi-agent Claude orchestration demo")
     filter_choice = st.sidebar.radio("Filter by latest decision", ["all", "accept", "decline", "refer"], horizontal=True)
@@ -151,25 +148,28 @@ def main():
         ]
 
     st.sidebar.divider()
-    for sub in submissions:
-        run = sub["_latest_run"]
-        decision = run["decision"]["decision"] if run else None
-        if st.sidebar.button(sub["business_name"], key=f"sel_{sub['submission_id']}", use_container_width=True):
-            st.session_state.selected_id = sub["submission_id"]
-        caption = f"{sub['submission_id']} · known: {sub.get('known_label', '—')}"
-        if decision:
-            caption += f" · last run: {decision}"
-        st.sidebar.caption(caption)
 
-    if not st.session_state.selected_id:
+    if not submissions:
+        st.sidebar.caption("No submissions match this filter yet — run some first.")
         st.title("Foreman")
-        st.write(
-            "Select a submission from the sidebar to see its details, run the live orchestrator, "
-            "and inspect the full orchestration trace."
-        )
+        st.info("No submissions match the current filter. Pick \"all\" in the sidebar to see everything.")
         return
 
-    sub_id = st.session_state.selected_id
+    by_id = {s["submission_id"]: s for s in submissions}
+
+    def _option_label(sid: str) -> str:
+        s = by_id[sid]
+        run = s["_latest_run"]
+        label = f"{s['business_name']} ({sid}) — known: {s.get('known_label', '—')}"
+        if run:
+            label += f" · last run: {run['decision']['decision']}"
+        return label
+
+    sub_id = st.sidebar.selectbox(
+        "Submission",
+        options=list(by_id.keys()),
+        format_func=_option_label,
+    )
     with get_conn() as conn:
         submission = get_submission(conn, sub_id)
         runs = list_runs(conn, sub_id)
