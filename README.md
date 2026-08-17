@@ -155,6 +155,7 @@ eval/
   eval_report.md               generated report (placeholder until run with a live key)
 dashboard/                    static HTML/CSS/JS orchestration-trace viewer
 tests/                        offline unit tests (mocked Claude client, no API key needed)
+streamlit_app.py               shareable dashboard (Streamlit Community Cloud), same app/ backend
 ```
 
 ## Setup
@@ -174,6 +175,26 @@ uvicorn app.main:app --reload
 
 Then open http://localhost:8000. The 20 fixture submissions load automatically on
 startup; click one and hit **Run live** to invoke the real orchestrator end-to-end.
+
+### Shareable hosted demo (Streamlit Community Cloud)
+
+[`streamlit_app.py`](streamlit_app.py) is an alternate dashboard with a shareable URL, for
+handing this to someone without asking them to run anything locally. It's a thin UI layer
+over the same `app/` package the FastAPI dashboard uses — orchestrator, citation validation,
+and synthesis all behave identically either way; only the frontend differs.
+
+To deploy: push this repo to GitHub, go to [share.streamlit.io](https://share.streamlit.io),
+"New app" → point it at this repo with **Main file path** `streamlit_app.py`, then under the
+app's **Settings → Secrets** add:
+
+```toml
+ANTHROPIC_API_KEY = "sk-ant-..."
+```
+
+Submissions are re-seeded from `data/submissions/submissions.json` on every app start, so the
+free tier's filesystem not persisting across restarts only costs you past run history, not
+functionality. Anyone with the URL can trigger a "Run live" (real, billed API calls) — keep
+that in mind before sharing the link widely.
 
 ### Running the offline test suite
 

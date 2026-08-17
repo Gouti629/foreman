@@ -7,3 +7,4 @@ venv/
 *.db-journal
 .pytest_cache/
 eval/results/
+.streamlit/secrets.toml
