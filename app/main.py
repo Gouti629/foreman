@@ -1,6 +1,7 @@
 """FastAPI app: serves the dashboard and a small JSON API over submissions
-and run traces. Submission fixtures are loaded into SQLite on startup so the
-dashboard has something to show even before any live run happens.
+and run traces. Submission fixtures — and pre-computed live run results, if
+present — are loaded into SQLite on startup so the dashboard has something
+to show even before any live run happens.
 """
 import json
 import os
@@ -11,12 +12,13 @@ from fastapi.staticfiles import StaticFiles
 
 from app.db import (
     get_conn, get_run, get_submission, init_db, list_runs, list_submissions,
-    upsert_submission,
+    save_run, upsert_submission,
 )
 from app.run_pipeline import run_submission
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUBMISSIONS_FIXTURE = os.path.join(BASE_DIR, "data", "submissions", "submissions.json")
+SEED_RUNS_FIXTURE = os.path.join(BASE_DIR, "data", "runs", "seed_runs.json")
 DASHBOARD_DIR = os.path.join(BASE_DIR, "dashboard")
 
 app = FastAPI(title="Foreman")
@@ -31,6 +33,12 @@ def _startup():
         with get_conn() as conn:
             for sub in fixtures:
                 upsert_submission(conn, sub)
+    if os.path.exists(SEED_RUNS_FIXTURE):
+        with open(SEED_RUNS_FIXTURE, encoding="utf-8") as f:
+            seed_runs = json.load(f)
+        with get_conn() as conn:
+            for run in seed_runs:
+                save_run(conn, run)
 
 
 app.mount("/static", StaticFiles(directory=DASHBOARD_DIR), name="static")

@@ -33,16 +33,35 @@ def phase2_reason(trace: dict) -> str:
     return phase2["reason"] if phase2 else ""
 
 
+async def _run_with_retries(sub: dict, attempts: int = 3, delay_seconds: int = 5):
+    for attempt in range(1, attempts + 1):
+        try:
+            return await run_submission(sub, persist=True)
+        except Exception as e:
+            print(f"  attempt {attempt}/{attempts} failed: {e}")
+            if attempt < attempts:
+                await asyncio.sleep(delay_seconds)
+    return None
+
+
 async def main():
     init_db()
     with open(SUBMISSIONS_PATH, encoding="utf-8") as f:
         submissions = json.load(f)
 
     results = []
+    failed = []
     for sub in submissions:
         print(f"Running {sub['submission_id']} ({sub['business_name']})...")
-        trace = await run_submission(sub, persist=True)
+        trace = await _run_with_retries(sub)
+        if trace is None:
+            failed.append(sub["submission_id"])
+            continue
         results.append((sub, trace))
+
+    if failed:
+        print(f"\nFailed after retries (network issue?): {', '.join(failed)}")
+        print("Re-run `python -m eval.run_eval` to retry — already-succeeded runs are unaffected (persisted).")
 
     write_report(results)
     print(f"\nWrote {REPORT_PATH}")

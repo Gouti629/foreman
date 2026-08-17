@@ -19,7 +19,10 @@ class SpecialistError(RuntimeError):
 
 
 def get_client() -> AsyncAnthropic:
-    return AsyncAnthropic(api_key=ANTHROPIC_API_KEY)
+    # Higher than the SDK default (2) — this environment sees occasional
+    # transient connection timeouts to the Anthropic API unrelated to the
+    # key itself, so retry harder before surfacing an error to the caller.
+    return AsyncAnthropic(api_key=ANTHROPIC_API_KEY, max_retries=5)
 
 
 def _block_to_dict(block: Any) -> dict:

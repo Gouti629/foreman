@@ -150,9 +150,12 @@ app/
 data/
   reference/                 class_codes.json, comparable_pricing.json (tool-backed lookups)
   submissions/                20 synthetic test submissions with known-correct labels
+  runs/seed_runs.json         pre-computed live run traces for all 20 fixtures, loaded on
+                               startup so a fresh deploy shows a filled dashboard immediately
 eval/
-  run_eval.py                 runs the fixtures live, scores accuracy + routing efficiency
-  eval_report.md               generated report (placeholder until run with a live key)
+  run_eval.py                 runs the fixtures live, scores accuracy + routing efficiency;
+                               also regenerates data/runs/seed_runs.json's source data
+  eval_report.md               real accuracy/confusion-matrix report from the last live eval run
 dashboard/                    static HTML/CSS/JS orchestration-trace viewer
 tests/                        offline unit tests (mocked Claude client, no API key needed)
 streamlit_app.py               shareable dashboard (Streamlit Community Cloud), same app/ backend
@@ -231,8 +234,11 @@ understated headcount, even though coverage and pricing both look fine in isolat
 
 ## Known assumptions / what to check when you run it
 
-- Built without a live `ANTHROPIC_API_KEY` in the dev environment, so `eval/eval_report.md`
-  is a placeholder — run `python -m eval.run_eval` to generate the real numbers.
+- `eval/eval_report.md` reflects the most recent live `python -m eval.run_eval` run against
+  `claude-sonnet-5`: 15/20 (75%) decisions matched each fixture's `known_label`. Re-run it any
+  time the pipeline or thresholds change — it overwrites the report (and, if you re-export,
+  `data/runs/seed_runs.json`) with fresh numbers.
 - Severity/confidence thresholds in `app/config.py` and `app/agents/synthesis.py` were
   chosen deliberately but are the most likely thing to want tuning after seeing real model
-  output on the fixture set.
+  output on the fixture set — the 5/20 misses in the current eval report are a reasonable
+  starting point for that tuning.

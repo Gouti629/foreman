@@ -20,11 +20,14 @@ try:
 except FileNotFoundError:
     pass  # no .streamlit/secrets.toml locally — local dev uses .env instead
 
-from app.db import get_conn, get_submission, init_db, list_runs, list_submissions, upsert_submission
+from app.db import (
+    get_conn, get_submission, init_db, list_runs, list_submissions, save_run, upsert_submission,
+)
 from app.run_pipeline import run_submission
 
 BASE_DIR = Path(__file__).resolve().parent
 SUBMISSIONS_FIXTURE = BASE_DIR / "data" / "submissions" / "submissions.json"
+SEED_RUNS_FIXTURE = BASE_DIR / "data" / "runs" / "seed_runs.json"
 
 SPECIALIST_LABELS = {
     "coverage_checker": "Coverage Checker",
@@ -43,6 +46,12 @@ def init_data():
     with get_conn() as conn:
         for sub in fixtures:
             upsert_submission(conn, sub)
+    if SEED_RUNS_FIXTURE.exists():
+        with open(SEED_RUNS_FIXTURE, encoding="utf-8") as f:
+            seed_runs = json.load(f)
+        with get_conn() as conn:
+            for run in seed_runs:
+                save_run(conn, run)
     return True
 
 
