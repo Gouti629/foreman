@@ -1,0 +1,141 @@
+{
+  "class_codes": {
+    "RESTAURANT-FULL": {
+      "label": "Full-Service Restaurant (with alcohol)",
+      "description": "Sit-down restaurant serving food and alcoholic beverages on premises.",
+      "typical_coverages": ["General Liability", "Liquor Liability", "Property", "Workers Compensation", "Equipment Breakdown"],
+      "common_exclusions_or_red_flags": [
+        "Liquor Liability frequently omitted from submissions despite alcohol sales",
+        "Assault & Battery exclusion is standard and should be disclosed",
+        "Grease/fire exposure requires Property coverage with cooking-equipment endorsement"
+      ],
+      "revenue_per_employee_range": [35000, 90000],
+      "notes": "Loss history involving slip-and-fall or liquor-related incidents materially raises risk."
+    },
+    "RESTAURANT-QSR": {
+      "label": "Quick-Service Restaurant (no alcohol)",
+      "description": "Counter-service or fast-food restaurant, no alcohol sales.",
+      "typical_coverages": ["General Liability", "Property", "Workers Compensation", "Equipment Breakdown"],
+      "common_exclusions_or_red_flags": [
+        "Liquor Liability not applicable — requesting it is a mismatch worth flagging",
+        "High employee turnover raises Workers Comp exposure"
+      ],
+      "revenue_per_employee_range": [50000, 110000],
+      "notes": "Lower severity exposure than full-service with alcohol."
+    },
+    "BAR-NIGHTCLUB": {
+      "label": "Bar / Nightclub",
+      "description": "Establishment primarily serving alcohol, often with live entertainment or dancing.",
+      "typical_coverages": ["General Liability", "Liquor Liability", "Property", "Workers Compensation"],
+      "common_exclusions_or_red_flags": [
+        "Liquor Liability is mandatory, not optional, for this class",
+        "Assault & Battery and Abuse/Molestation exclusions are standard and high-relevance",
+        "Occupancy over stated capacity is a frequent hidden exposure"
+      ],
+      "revenue_per_employee_range": [45000, 120000],
+      "notes": "Highest-severity hospitality class; any liquor liability gap is a hard flag."
+    },
+    "RETAIL-APPAREL": {
+      "label": "Retail – Apparel / General Merchandise",
+      "description": "Storefront retail selling clothing or general merchandise, no food/alcohol.",
+      "typical_coverages": ["General Liability", "Property", "Workers Compensation", "Crime/Employee Dishonesty"],
+      "common_exclusions_or_red_flags": [
+        "Product Liability relevant only if store also manufactures/private-labels goods",
+        "Shoplifting/inventory shrinkage is a Crime coverage consideration, not GL"
+      ],
+      "revenue_per_employee_range": [80000, 220000],
+      "notes": "Generally low-severity class relative to hospitality or construction."
+    },
+    "CONTRACTOR-GENERAL": {
+      "label": "General Contractor (commercial construction)",
+      "description": "Manages/performs commercial construction projects, may use subcontractors.",
+      "typical_coverages": ["General Liability", "Workers Compensation", "Umbrella/Excess", "Builder's Risk", "Contractors Pollution"],
+      "common_exclusions_or_red_flags": [
+        "Subcontractor use without Additional Insured / Certificate tracking is a major gap",
+        "Completed Operations exclusion or sub-limit is a red flag for this class",
+        "No Umbrella/Excess requested despite large project size is a mismatch"
+      ],
+      "revenue_per_employee_range": [120000, 400000],
+      "notes": "High severity class; requires Umbrella for projects over ~$2M revenue."
+    },
+    "CONTRACTOR-ROOFING": {
+      "label": "Roofing Contractor",
+      "description": "Specialty trade contractor performing roof installation/repair, height exposure.",
+      "typical_coverages": ["General Liability", "Workers Compensation", "Umbrella/Excess"],
+      "common_exclusions_or_red_flags": [
+        "Roofing is a restricted/high-hazard trade — many carriers exclude or sublimit it",
+        "Height-related falls dominate loss history for this class",
+        "Subcontracted roofing work without Additional Insured status is a hard flag"
+      ],
+      "revenue_per_employee_range": [90000, 250000],
+      "notes": "One of the highest Workers Compensation severity classes in construction."
+    },
+    "TECH-SAAS-OFFICE": {
+      "label": "Technology / SaaS – Office Only",
+      "description": "Software company, office-based, no manufacturing or physical product.",
+      "typical_coverages": ["General Liability", "Property (office contents)", "Workers Compensation", "Cyber Liability", "Tech E&O"],
+      "common_exclusions_or_red_flags": [
+        "Cyber Liability commonly omitted despite being the primary exposure for this class",
+        "Tech E&O relevant if the company provides software/services to clients"
+      ],
+      "revenue_per_employee_range": [100000, 500000],
+      "notes": "Low physical-injury severity; risk concentrated in data/cyber and professional liability."
+    },
+    "TRUCKING-FREIGHT": {
+      "label": "Trucking / Freight Transportation",
+      "description": "Motor carrier hauling freight, owns or leases commercial vehicles.",
+      "typical_coverages": ["Commercial Auto Liability", "Motor Truck Cargo", "General Liability", "Workers Compensation"],
+      "common_exclusions_or_red_flags": [
+        "Commercial Auto Liability is mandatory — absence is a hard flag",
+        "Cargo coverage limit should scale with typical load value",
+        "Driver safety/loss history is the dominant underwriting factor"
+      ],
+      "revenue_per_employee_range": [130000, 300000],
+      "notes": "High-severity auto exposure class; loss history weighs heavily."
+    },
+    "MANUFACTURING-LIGHT": {
+      "label": "Light Manufacturing (non-hazardous materials)",
+      "description": "Assembles or fabricates goods from non-hazardous materials.",
+      "typical_coverages": ["General Liability", "Product Liability", "Property", "Workers Compensation", "Equipment Breakdown"],
+      "common_exclusions_or_red_flags": [
+        "Product Liability is essential for this class; requesting only premises GL is a gap",
+        "Machinery-related injury dominates Workers Comp loss history"
+      ],
+      "revenue_per_employee_range": [110000, 350000],
+      "notes": "Moderate severity; varies significantly with materials/process specifics."
+    },
+    "PROPERTY-MGMT": {
+      "label": "Real Estate / Property Management",
+      "description": "Manages residential or commercial rental properties for owners.",
+      "typical_coverages": ["General Liability", "Property", "Umbrella/Excess", "Errors & Omissions"],
+      "common_exclusions_or_red_flags": [
+        "E&O is important given fiduciary/management duties to property owners",
+        "Habitability/maintenance-related claims are the dominant loss driver"
+      ],
+      "revenue_per_employee_range": [90000, 300000],
+      "notes": "Severity scales with number and type of managed units."
+    },
+    "CHILDCARE-DAYCARE": {
+      "label": "Childcare / Daycare Facility",
+      "description": "Licensed facility providing care for children.",
+      "typical_coverages": ["General Liability", "Abuse/Molestation Liability", "Property", "Workers Compensation"],
+      "common_exclusions_or_red_flags": [
+        "Abuse/Molestation Liability is mandatory for this class — absence is a hard flag",
+        "Staff-to-child ratio and background-check practices are key underwriting factors"
+      ],
+      "revenue_per_employee_range": [30000, 70000],
+      "notes": "One of the highest-scrutiny classes; any coverage gap here is treated as severe."
+    },
+    "AUTO-REPAIR-GARAGE": {
+      "label": "Auto Repair / Garage",
+      "description": "Repairs or services motor vehicles for customers.",
+      "typical_coverages": ["General Liability", "Garagekeepers Liability", "Property", "Workers Compensation"],
+      "common_exclusions_or_red_flags": [
+        "Garagekeepers Liability (care/custody/control of customer vehicles) is essential and often omitted",
+        "On-site test drives require Garage Liability auto exposure, not just premises GL"
+      ],
+      "revenue_per_employee_range": [70000, 180000],
+      "notes": "Custody of customer property is the defining exposure for this class."
+    }
+  }
+}

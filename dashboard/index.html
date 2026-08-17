@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Foreman — Submission Review</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Foreman</h1>
+        <p class="tagline">Broker submission review, orchestrated across three specialists.</p>
+      </div>
+      <div class="sidebar-filters" id="sidebar-filters">
+        <button class="filter-chip is-active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="accept">Accept</button>
+        <button class="filter-chip" data-filter="refer">Refer</button>
+        <button class="filter-chip" data-filter="decline">Decline</button>
+      </div>
+      <div class="submission-list" id="submission-list">
+        <div class="list-loading">Loading submissions…</div>
+      </div>
+    </aside>
+    <main class="main" id="main">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-state-mark">FM</div>
+        <p>Select a submission on the left to see how Foreman routed it and why.</p>
+      </div>
+      <div class="trace-view" id="trace-view" hidden></div>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

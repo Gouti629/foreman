@@ -1,0 +1,435 @@
+[
+  {
+    "submission_id": "SUB-001",
+    "business_name": "Sunrise Diner Express",
+    "business_type": "Quick-service breakfast and lunch counter restaurant, no alcohol.",
+    "industry_class_code": "RESTAURANT-QSR",
+    "annual_revenue": 800000,
+    "employee_count": 12,
+    "years_in_business": 5,
+    "location": {"city": "Austin", "state": "TX"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 300000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 13500,
+    "loss_history": [],
+    "broker_notes": "Family-owned quick-service restaurant, single location, no alcohol service. Clean loss history.",
+    "known_label": "accept",
+    "known_label_reason": "Coverage matches the class, pricing sits inside the expected range, and the submission is internally consistent."
+  },
+  {
+    "submission_id": "SUB-002",
+    "business_name": "Lightwell Software Inc.",
+    "business_type": "B2B SaaS company providing project-management software.",
+    "industry_class_code": "TECH-SAAS-OFFICE",
+    "annual_revenue": 2000000,
+    "employee_count": 10,
+    "years_in_business": 4,
+    "location": {"city": "Denver", "state": "CO"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2000},
+      {"type": "Property", "limit": 250000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Cyber Liability", "limit": 2000000, "deductible": 10000},
+      {"type": "Tech E&O", "limit": 1000000, "deductible": 5000}
+    ],
+    "requested_annual_premium": 15000,
+    "loss_history": [],
+    "broker_notes": "Fully remote-friendly team with one small office. No litigation history.",
+    "known_label": "accept",
+    "known_label_reason": "Cyber and Tech E&O are both present for a SaaS class, pricing is within range, and data is consistent."
+  },
+  {
+    "submission_id": "SUB-003",
+    "business_name": "Thread & Co. Boutique",
+    "business_type": "Single-location boutique clothing retailer.",
+    "industry_class_code": "RETAIL-APPAREL",
+    "annual_revenue": 1500000,
+    "employee_count": 12,
+    "years_in_business": 8,
+    "location": {"city": "Portland", "state": "OR"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 500000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Crime/Employee Dishonesty", "limit": 100000, "deductible": 1000}
+    ],
+    "requested_annual_premium": 13000,
+    "loss_history": [],
+    "broker_notes": "Single boutique clothing store, no manufacturing, no online fulfillment warehouse.",
+    "known_label": "accept",
+    "known_label_reason": "Straightforward retail risk, coverage and pricing both appropriate, no red flags."
+  },
+  {
+    "submission_id": "SUB-004",
+    "business_name": "Electric Lounge",
+    "business_type": "Nightclub with live DJ sets, dance floor, and full bar service.",
+    "industry_class_code": "BAR-NIGHTCLUB",
+    "annual_revenue": 1200000,
+    "employee_count": 18,
+    "years_in_business": 3,
+    "location": {"city": "Miami", "state": "FL"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Property", "limit": 400000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 38000,
+    "loss_history": [
+      {"year": 2024, "type": "Liquor Liability - Third Party Injury", "incurred_amount": 45000, "description": "Patron injured in altercation after over-service of alcohol."}
+    ],
+    "broker_notes": "Nightclub with live DJ, dance floor, full bar service until 2am. Capacity 250.",
+    "known_label": "decline",
+    "known_label_reason": "Liquor Liability is mandatory for this class and is entirely absent from the request despite an alcohol-related loss on file — coverage hard fail, pricing check should be skipped."
+  },
+  {
+    "submission_id": "SUB-005",
+    "business_name": "Bright Beginnings Learning Center",
+    "business_type": "Licensed daycare facility for infants through preschool age.",
+    "industry_class_code": "CHILDCARE-DAYCARE",
+    "annual_revenue": 450000,
+    "employee_count": 10,
+    "years_in_business": 6,
+    "location": {"city": "Columbus", "state": "OH"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 200000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 15000,
+    "loss_history": [],
+    "broker_notes": "Licensed daycare, ages 6 weeks to 5 years, capacity 40 children, background-checked staff.",
+    "known_label": "decline",
+    "known_label_reason": "Abuse/Molestation Liability is mandatory for childcare and is absent — coverage hard fail, pricing check should be skipped."
+  },
+  {
+    "submission_id": "SUB-006",
+    "business_name": "Summit Roofing Solutions",
+    "business_type": "Residential and light commercial re-roofing contractor.",
+    "industry_class_code": "CONTRACTOR-ROOFING",
+    "annual_revenue": 3000000,
+    "employee_count": 20,
+    "years_in_business": 7,
+    "location": {"city": "Phoenix", "state": "AZ"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Umbrella/Excess", "limit": 2000000, "deductible": 0}
+    ],
+    "requested_annual_premium": 42000,
+    "loss_history": [
+      {"year": 2025, "type": "Workers Comp - Fall from Height", "incurred_amount": 180000, "description": "Employee fell from roof, resulted in permanent disability claim."},
+      {"year": 2023, "type": "Workers Comp - Fall", "incurred_amount": 95000, "description": "Ladder fall, fractured leg."}
+    ],
+    "broker_notes": "Established roofing contractor, primarily residential and light commercial re-roofing.",
+    "known_label": "decline",
+    "known_label_reason": "Requested premium ($42k) is far below the expected range ($90k-$165k) despite two significant fall-related loss events — pricing hard fail. Coverage itself is appropriate, so this is a pricing-only decline."
+  },
+  {
+    "submission_id": "SUB-007",
+    "business_name": "Lonestar Freight Lines",
+    "business_type": "Regional dry-van freight trucking carrier.",
+    "industry_class_code": "TRUCKING-FREIGHT",
+    "annual_revenue": 4000000,
+    "employee_count": 22,
+    "years_in_business": 9,
+    "location": {"city": "Dallas", "state": "TX"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Motor Truck Cargo", "limit": 250000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 140000,
+    "loss_history": [],
+    "broker_notes": "Regional dry-van freight carrier, 15 tractors, drivers average 8 years experience.",
+    "known_label": "decline",
+    "known_label_reason": "Commercial Auto Liability is mandatory for a motor carrier and is absent from the request — coverage hard fail, pricing check should be skipped."
+  },
+  {
+    "submission_id": "SUB-008",
+    "business_name": "Peak Commercial Builders",
+    "business_type": "General contractor specializing in mid-size commercial build-outs.",
+    "industry_class_code": "CONTRACTOR-GENERAL",
+    "annual_revenue": 8000000,
+    "employee_count": 35,
+    "years_in_business": 12,
+    "location": {"city": "Denver", "state": "CO"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 2000000, "deductible": 5000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Builder's Risk", "limit": 1000000, "deductible": 5000}
+    ],
+    "requested_annual_premium": 190000,
+    "loss_history": [
+      {"year": 2024, "type": "General Liability - Property Damage", "incurred_amount": 35000, "description": "Damaged adjacent structure during excavation."}
+    ],
+    "broker_notes": "General contractor specializing in mid-size commercial build-outs, uses subcontractors for electrical/plumbing, maintains COI tracking for all subs.",
+    "known_label": "refer",
+    "known_label_reason": "No Umbrella/Excess requested despite $8M revenue and active commercial project exposure — a high-severity coverage gap, not an automatic mandatory-coverage hard fail, so it should go to a human rather than auto-decline."
+  },
+  {
+    "submission_id": "SUB-009",
+    "business_name": "Lakeside Property Partners",
+    "business_type": "Manages residential apartment buildings on behalf of property owners.",
+    "industry_class_code": "PROPERTY-MGMT",
+    "annual_revenue": 2500000,
+    "employee_count": 15,
+    "years_in_business": 10,
+    "location": {"city": "Chicago", "state": "IL"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Property", "limit": 500000, "deductible": 2500},
+      {"type": "Umbrella/Excess", "limit": 2000000, "deductible": 0}
+    ],
+    "requested_annual_premium": 35000,
+    "loss_history": [
+      {"year": 2023, "type": "Habitability Dispute", "incurred_amount": 8000, "description": "Tenant claim over delayed maintenance response."}
+    ],
+    "broker_notes": "Manages 12 residential apartment buildings on behalf of three property owners, includes lease administration and rent collection.",
+    "known_label": "refer",
+    "known_label_reason": "E&O is important given fiduciary property-management duties and is absent; a prior habitability dispute reinforces the exposure but doesn't rise to an automatic hard fail."
+  },
+  {
+    "submission_id": "SUB-010",
+    "business_name": "Precision Molded Components",
+    "business_type": "Contract manufacturer of injection-molded plastic parts.",
+    "industry_class_code": "MANUFACTURING-LIGHT",
+    "annual_revenue": 3000000,
+    "employee_count": 32,
+    "years_in_business": 15,
+    "location": {"city": "Grand Rapids", "state": "MI"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Product Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Property", "limit": 750000, "deductible": 5000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Equipment Breakdown", "limit": 500000, "deductible": 2500}
+    ],
+    "requested_annual_premium": 40000,
+    "loss_history": [
+      {"year": 2022, "type": "Workers Comp - Machinery Injury", "incurred_amount": 22000, "description": "Hand injury on assembly line, minor."}
+    ],
+    "broker_notes": "Assembles plastic components for consumer goods clients, non-hazardous materials, single facility.",
+    "known_label": "refer",
+    "known_label_reason": "Two independent medium-severity findings — revenue-per-employee below the typical range for the class, and requested premium modestly below the expected range — together warrant referral even though neither alone is severe."
+  },
+  {
+    "submission_id": "SUB-011",
+    "business_name": "Corner Grill & Go",
+    "business_type": "Quick-service restaurant, no alcohol.",
+    "industry_class_code": "RESTAURANT-QSR",
+    "annual_revenue": 1000000,
+    "employee_count": 15,
+    "years_in_business": 6,
+    "location": {"city": "Nashville", "state": "TN"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 300000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 16000,
+    "loss_history": [
+      {"year": 2024, "type": "General Liability - Slip and Fall", "incurred_amount": 52000, "description": "Customer slipped on wet floor, resulted in litigation."}
+    ],
+    "broker_notes": "Excellent risk with no prior losses or claims history. Clean operation, experienced ownership.",
+    "known_label": "decline",
+    "known_label_reason": "ADVERSARIAL: broker notes explicitly claim no prior losses, directly contradicted by a $52k slip-and-fall loss on file — consistency hard fail."
+  },
+  {
+    "submission_id": "SUB-012",
+    "business_name": "Vintage Thread Boutique",
+    "business_type": "Boutique apparel shop, recently opened.",
+    "industry_class_code": "RETAIL-APPAREL",
+    "annual_revenue": 900000,
+    "employee_count": 8,
+    "years_in_business": 2,
+    "location": {"city": "Seattle", "state": "WA"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 300000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 11000,
+    "loss_history": [
+      {"year": 2018, "type": "General Liability - Product Liability", "incurred_amount": 30000, "description": "Customer allergic reaction to fabric dye."}
+    ],
+    "broker_notes": "Boutique apparel shop opened recently, no manufacturing on site.",
+    "known_label": "decline",
+    "known_label_reason": "ADVERSARIAL: loss event dated 2018, but years_in_business=2 means the business has only existed since 2024 — the loss predates the business, a hard contradiction."
+  },
+  {
+    "submission_id": "SUB-013",
+    "business_name": "Ironclad Roofing Co.",
+    "business_type": "Commercial roofing contractor.",
+    "industry_class_code": "CONTRACTOR-ROOFING",
+    "annual_revenue": 5000000,
+    "employee_count": 8,
+    "years_in_business": 9,
+    "location": {"city": "Charlotte", "state": "NC"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Umbrella/Excess", "limit": 2000000, "deductible": 0}
+    ],
+    "requested_annual_premium": 160000,
+    "loss_history": [],
+    "broker_notes": "Well-established commercial roofing contractor, strong safety record, long-tenured crew.",
+    "known_label": "refer",
+    "known_label_reason": "ADVERSARIAL: coverage present, pricing in range, no losses — looks like a clean accept. But employee_count (8) implies $625k revenue per employee, more than 2x the typical max for roofing, suggesting understated headcount or a misclassified risk. Hidden red flag only visible by cross-checking revenue against employee count."
+  },
+  {
+    "submission_id": "SUB-014",
+    "business_name": "Precision Auto Care",
+    "business_type": "Full-service auto repair shop.",
+    "industry_class_code": "AUTO-REPAIR-GARAGE",
+    "annual_revenue": 1100000,
+    "employee_count": 10,
+    "years_in_business": 11,
+    "location": {"city": "Tampa", "state": "FL"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 300000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 18000,
+    "loss_history": [],
+    "broker_notes": "Full-service auto repair shop, performs test drives on customer vehicles as part of diagnostics.",
+    "known_label": "decline",
+    "known_label_reason": "Garagekeepers Liability (care/custody/control of customer vehicles) is essential for this class, especially given the noted test drives, and is entirely absent — coverage hard fail."
+  },
+  {
+    "submission_id": "SUB-015",
+    "business_name": "Midwest Plastics Group",
+    "business_type": "Contract manufacturer of injection-molded plastic parts.",
+    "industry_class_code": "MANUFACTURING-LIGHT",
+    "annual_revenue": 2000000,
+    "employee_count": 12,
+    "years_in_business": 6,
+    "location": {"city": "Indianapolis", "state": "IN"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Product Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Property", "limit": 500000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 40000,
+    "loss_history": [],
+    "broker_notes": "Contract manufacturer producing injection-molded plastic parts, single facility, no subcontracted labor.",
+    "known_label": "accept",
+    "known_label_reason": "Product Liability is present as expected for this class, pricing and staffing ratios both fall within typical range."
+  },
+  {
+    "submission_id": "SUB-016",
+    "business_name": "Sunshine Auto Repair",
+    "business_type": "General auto repair and maintenance shop.",
+    "industry_class_code": "AUTO-REPAIR-GARAGE",
+    "annual_revenue": 1800000,
+    "employee_count": 14,
+    "years_in_business": 5,
+    "location": {"city": "Orlando", "state": "FL"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Garagekeepers Liability", "limit": 250000, "deductible": 1000},
+      {"type": "Property", "limit": 300000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 15000,
+    "loss_history": [
+      {"year": 2024, "type": "Garagekeepers - Vehicle Damage", "incurred_amount": 9000, "description": "Customer vehicle damaged while in shop custody."}
+    ],
+    "broker_notes": "General auto repair and maintenance shop, no test drives beyond the block.",
+    "known_label": "refer",
+    "known_label_reason": "Requested premium ($15k) is meaningfully below the expected range ($23.4k-$45k) — not extreme enough for an automatic decline, but combined with a recent garagekeepers loss, warrants underwriter review."
+  },
+  {
+    "submission_id": "SUB-017",
+    "business_name": "The Velvet Room",
+    "business_type": "High-volume nightclub with live entertainment and full bar.",
+    "industry_class_code": "BAR-NIGHTCLUB",
+    "annual_revenue": 1600000,
+    "employee_count": 20,
+    "years_in_business": 4,
+    "location": {"city": "Las Vegas", "state": "NV"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Liquor Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Property", "limit": 400000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 18000,
+    "loss_history": [
+      {"year": 2025, "type": "Liquor Liability - Assault", "incurred_amount": 90000, "description": "Patron assaulted by another patron after over-service, resulted in lawsuit."},
+      {"year": 2023, "type": "Liquor Liability - Assault", "incurred_amount": 40000, "description": "Bar fight resulted in injury claim."}
+    ],
+    "broker_notes": "High-volume nightclub, live entertainment Thursday-Saturday, full bar.",
+    "known_label": "decline",
+    "known_label_reason": "Coverage is appropriate (Liquor Liability present), but requested premium ($18k) is under half the expected range ($40k-$76.8k) despite two significant liquor-liability assault losses — pricing hard fail."
+  },
+  {
+    "submission_id": "SUB-018",
+    "business_name": "Peachtree Logistics",
+    "business_type": "Regional freight trucking carrier.",
+    "industry_class_code": "TRUCKING-FREIGHT",
+    "annual_revenue": 6000000,
+    "employee_count": 30,
+    "years_in_business": 14,
+    "location": {"city": "Atlanta", "state": "GA"},
+    "requested_coverages": [
+      {"type": "Commercial Auto Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Motor Truck Cargo", "limit": 250000, "deductible": 2500},
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 140000,
+    "loss_history": [
+      {"year": 2025, "type": "Commercial Auto - Collision", "incurred_amount": 120000, "description": "Multi-vehicle collision, driver at fault."},
+      {"year": 2024, "type": "Commercial Auto - Collision", "incurred_amount": 75000, "description": "Rear-end collision, driver at fault."},
+      {"year": 2023, "type": "Commercial Auto - Cargo Loss", "incurred_amount": 40000, "description": "Cargo damaged in transit."}
+    ],
+    "broker_notes": "Regional freight carrier, 28 tractors, mixed driver tenure.",
+    "known_label": "refer",
+    "known_label_reason": "Coverage and pricing both technically fall within acceptable bounds, but three at-fault collision/cargo losses across three consecutive years is a meaningful loss trend against a premium sitting near the low end — not a hard fail, but warrants human review."
+  },
+  {
+    "submission_id": "SUB-019",
+    "business_name": "Carolina Build Group",
+    "business_type": "Small general contractor focused on residential remodels and small commercial tenant build-outs.",
+    "industry_class_code": "CONTRACTOR-GENERAL",
+    "annual_revenue": 1200000,
+    "employee_count": 6,
+    "years_in_business": 5,
+    "location": {"city": "Raleigh", "state": "NC"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 2500},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0},
+      {"type": "Builder's Risk", "limit": 500000, "deductible": 2500}
+    ],
+    "requested_annual_premium": 32000,
+    "loss_history": [],
+    "broker_notes": "Small general contractor focused on residential remodels and small commercial tenant build-outs, minimal subcontractor use.",
+    "known_label": "accept",
+    "known_label_reason": "Small enough scale that Umbrella/Excess is not a mandatory expectation; coverage, pricing, and staffing all consistent for the class."
+  },
+  {
+    "submission_id": "SUB-020",
+    "business_name": "Coastline Apparel Co.",
+    "business_type": "Retail apparel brand with a flagship store.",
+    "industry_class_code": "RETAIL-APPAREL",
+    "annual_revenue": 2200000,
+    "employee_count": 14,
+    "years_in_business": 7,
+    "location": {"city": "Los Angeles", "state": "CA"},
+    "requested_coverages": [
+      {"type": "General Liability", "limit": 1000000, "deductible": 1000},
+      {"type": "Property", "limit": 400000, "deductible": 1000},
+      {"type": "Workers Compensation", "limit": 500000, "deductible": 0}
+    ],
+    "requested_annual_premium": 18000,
+    "loss_history": [],
+    "broker_notes": "Retail apparel brand with flagship store; also manufactures and private-labels a portion of its clothing line in-house for wholesale distribution.",
+    "known_label": "refer",
+    "known_label_reason": "ADVERSARIAL: coverage looks appropriate for pure retail on the surface, but broker notes reveal in-house private-label manufacturing — an exposure that requires Product Liability, which is absent. Hidden gap requires human review."
+  }
+]
