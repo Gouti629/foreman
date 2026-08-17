@@ -37,6 +37,21 @@ SPECIALIST_LABELS = {
 DECISION_COLOR = {"accept": "green", "decline": "red", "refer": "orange"}
 SEVERITY_COLOR = {"critical": "red", "high": "orange", "medium": "blue", "low": "gray", "info": "gray"}
 
+# Matches the color/typography of the original static dashboard (dashboard/styles.css):
+# warm off-white background, white panels, deep green accent, serif headings. Targets real
+# HTML tags and Streamlit's documented data-testid attributes, not internal emotion-cache
+# class names, so it doesn't depend on Streamlit's unstable internal DOM structure.
+_CUSTOM_CSS = """
+<style>
+h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+[data-testid="stSidebar"] {
+    border-right: 1px solid #e4e1d8;
+}
+</style>
+"""
+
 
 @st.cache_resource
 def init_data():
@@ -143,6 +158,7 @@ def render_trace(trace: dict):
 
 def main():
     st.set_page_config(page_title="Foreman", page_icon="\U0001F4CB", layout="wide")
+    st.markdown(_CUSTOM_CSS, unsafe_allow_html=True)
     init_data()
 
     st.sidebar.title("Foreman")
