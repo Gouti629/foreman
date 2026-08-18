@@ -49,8 +49,17 @@ h1, h2, h3 {
 [data-testid="stSidebar"] {
     border-right: 1px solid #e4e1d8;
 }
+/* Trim the large default top/bottom margins around the main content area
+   (div[class^='block-container'] is the standard, long-stable selector the
+   Streamlit community uses for this — ~40% less than the ~6rem/6rem defaults). */
+div[class^='block-container'] {
+    padding-top: 3.6rem;
+    padding-bottom: 3.6rem;
+}
 </style>
 """
+
+_ROW_DIVIDER = '<hr style="margin:6px 0;border:none;border-top:1px solid rgba(0,0,0,0.08);">'
 
 
 @st.cache_resource
@@ -176,7 +185,15 @@ def main():
 
     st.sidebar.title("Foreman")
     st.sidebar.caption("Insurance submission review — multi-agent Claude orchestration demo")
-    filter_choice = st.sidebar.radio("Filter by latest decision", ["all", "accept", "decline", "refer"], horizontal=True)
+    filter_choice = st.sidebar.pills(
+        "Filter by latest decision",
+        ["all", "accept", "decline", "refer"],
+        default="all",
+        label_visibility="collapsed",
+    )
+    # st.pills allows deselecting the active pill (returns None) — treat that the
+    # same as "all" rather than matching decision == None and hiding everything.
+    filter_choice = filter_choice or "all"
 
     submissions = load_submissions()
     if filter_choice != "all":
@@ -223,6 +240,7 @@ def main():
         if decision:
             caption += f" · last run: {decision}"
         st.sidebar.caption(caption)
+        st.sidebar.markdown(_ROW_DIVIDER, unsafe_allow_html=True)
 
     sub_id = st.session_state.selected_id
     with get_conn() as conn:
