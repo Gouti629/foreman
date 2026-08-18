@@ -56,6 +56,15 @@ div[class^='block-container'] {
     padding-top: 3.6rem;
     padding-bottom: 3.6rem;
 }
+/* Wider sidebar (default is ~336px). Both expanded and collapsed rules are
+   needed — Streamlit's collapse animation is a negative margin equal to the
+   width, so only setting the expanded width leaves a gap/overlap on collapse. */
+[data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
+    width: 420px;
+}
+[data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
+    margin-left: -420px;
+}
 </style>
 """
 
@@ -183,14 +192,17 @@ def main():
     st.markdown(_CUSTOM_CSS, unsafe_allow_html=True)
     init_data()
 
-    st.sidebar.title("Foreman")
-    st.sidebar.caption("Insurance submission review — multi-agent Claude orchestration demo")
-    filter_choice = st.sidebar.pills(
-        "Filter by latest decision",
-        ["all", "accept", "decline", "refer"],
-        default="all",
-        label_visibility="collapsed",
-    )
+    # gap=None packs title/caption/filter tightly — this top section doesn't need the
+    # generous default spacing the case list below benefits from.
+    with st.sidebar.container(gap=None):
+        st.markdown("### Foreman")
+        st.caption("Insurance submission review — multi-agent Claude orchestration demo")
+        filter_choice = st.pills(
+            "Filter by latest decision",
+            ["all", "accept", "decline", "refer"],
+            default="all",
+            label_visibility="collapsed",
+        )
     # st.pills allows deselecting the active pill (returns None) — treat that the
     # same as "all" rather than matching decision == None and hiding everything.
     filter_choice = filter_choice or "all"
@@ -248,31 +260,34 @@ def main():
         runs = list_runs(conn, sub_id)
     trace = runs[0] if runs else None
 
-    st.header(esc(submission["business_name"]))
-    st.caption(
-        f"{esc(submission['business_type'])} · {esc(submission['industry_class_code'])} · "
-        f"{esc(submission['location']['city'])}, {esc(submission['location']['state'])} · "
-        f"${submission['annual_revenue']:,} revenue · {submission['employee_count']} employees"
-    )
+    # gap="small" (vs. the unwrapped page's larger default) tightens the space between
+    # the header/caption/button/decision-panel/trace blocks below.
+    with st.container(gap="small"):
+        st.header(esc(submission["business_name"]))
+        st.caption(
+            f"{esc(submission['business_type'])} · {esc(submission['industry_class_code'])} · "
+            f"{esc(submission['location']['city'])}, {esc(submission['location']['state'])} · "
+            f"${submission['annual_revenue']:,} revenue · {submission['employee_count']} employees"
+        )
 
-    if st.button("Run live" if not trace else "Run again", type="primary"):
-        new_trace = None
-        with st.spinner("Running orchestrator — calls Claude 2-3×..."):
-            try:
-                new_trace = asyncio.run(run_submission(submission, persist=True))
-            except Exception as e:
-                st.error(f"Run failed: {esc(e)}. Check that ANTHROPIC_API_KEY is set correctly in Secrets.")
-        if new_trace:
-            st.rerun()
+        if st.button("Run live" if not trace else "Run again", type="primary"):
+            new_trace = None
+            with st.spinner("Running orchestrator — calls Claude 2-3×..."):
+                try:
+                    new_trace = asyncio.run(run_submission(submission, persist=True))
+                except Exception as e:
+                    st.error(f"Run failed: {esc(e)}. Check that ANTHROPIC_API_KEY is set correctly in Secrets.")
+            if new_trace:
+                st.rerun()
 
-    if trace:
-        known = submission.get("known_label")
-        if known:
-            match = known == trace["decision"]["decision"]
-            st.info(f"Eval label: **{known}** — {'matches' if match else 'differs from'} orchestrator decision.")
-        render_trace(trace)
-    else:
-        st.info("No run yet for this submission. Click **Run live** to invoke the orchestrator.")
+        if trace:
+            known = submission.get("known_label")
+            if known:
+                match = known == trace["decision"]["decision"]
+                st.info(f"Eval label: **{known}** — {'matches' if match else 'differs from'} orchestrator decision.")
+            render_trace(trace)
+        else:
+            st.info("No run yet for this submission. Click **Run live** to invoke the orchestrator.")
 
 
 main()
