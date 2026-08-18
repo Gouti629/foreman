@@ -7,6 +7,7 @@ Secrets (ANTHROPIC_API_KEY, optionally CLAUDE_MODEL) are configured via
 Streamlit Cloud's Settings -> Secrets, not committed to the repo.
 """
 import asyncio
+import html
 import json
 import os
 from pathlib import Path
@@ -79,7 +80,20 @@ div[class^='block-container'], .stMainBlockContainer {
 </style>
 """
 
-_ROW_DIVIDER = '<hr style="margin:6px 0;border:none;border-top:1px solid rgba(0,0,0,0.08);">'
+def _row_caption_html(caption: str) -> str:
+    # Caption text + divider in a single markdown element, not two separate
+    # st.caption()/st.markdown() calls. Streamlit inserts its own automatic
+    # gap between *separate* elements, and that gap isn't guaranteed equal
+    # above vs. below a given element (e.g. the gap before a button can
+    # differ from the gap before a text element) — which is what made the
+    # divider sit closer to one side than the other. Bundling caption+hr into
+    # one block makes the space on both sides of it come from the exact same
+    # button-to-this-block gap, and the space between the caption text and
+    # the line itself is fully our own explicit, symmetric margin.
+    return (
+        f'<div style="font-size:0.8rem;color:#5c584c;line-height:1.3;">{html.escape(caption)}</div>'
+        '<hr style="margin:8px 0;border:none;border-top:1px solid rgba(0,0,0,0.08);">'
+    )
 
 
 @st.cache_resource
@@ -262,8 +276,7 @@ def main():
         caption = f"{sub['submission_id']} · known: {sub.get('known_label', '—')}"
         if decision:
             caption += f" · last run: {decision}"
-        st.sidebar.caption(caption)
-        st.sidebar.markdown(_ROW_DIVIDER, unsafe_allow_html=True)
+        st.sidebar.markdown(_row_caption_html(caption), unsafe_allow_html=True)
 
     sub_id = st.session_state.selected_id
     with get_conn() as conn:
