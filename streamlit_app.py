@@ -49,21 +49,32 @@ h1, h2, h3 {
 [data-testid="stSidebar"] {
     border-right: 1px solid #e4e1d8;
 }
-/* Trim the large default top/bottom margins around the main content area
-   (div[class^='block-container'] is the standard, long-stable selector the
-   Streamlit community uses for this — ~40% less than the ~6rem/6rem defaults). */
-div[class^='block-container'] {
+/* Trim the large default top/bottom margins around the main content area.
+   Both selectors target the same element across different Streamlit
+   versions/builds — harmless if only one actually matches. */
+div[class^='block-container'], .stMainBlockContainer {
     padding-top: 3.6rem;
     padding-bottom: 3.6rem;
 }
-/* Wider sidebar (default is ~336px). Both expanded and collapsed rules are
-   needed — Streamlit's collapse animation is a negative margin equal to the
-   width, so only setting the expanded width leaves a gap/overlap on collapse. */
+/* Wider sidebar (default is ~336px). Width is set on the OUTER sidebar
+   element (not just its inner div) with !important — Streamlit's own
+   resize-state can set an inline width on the outer element, which wins
+   over an external stylesheet rule that only targets the inner div,
+   leaving the two out of sync and the inner content overlapping the main
+   area. min/max-width pins it so that mismatch can't recur (trade-off:
+   the sidebar's native drag-to-resize no longer works). Both
+   expanded/collapsed rules are needed — collapsing is a negative margin
+   equal to the width, so only setting the expanded width leaves a gap. */
+[data-testid="stSidebar"][aria-expanded="true"] {
+    width: 380px !important;
+    min-width: 380px !important;
+    max-width: 380px !important;
+}
 [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
-    width: 420px;
+    width: 380px !important;
 }
 [data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
-    margin-left: -420px;
+    margin-left: -380px !important;
 }
 </style>
 """
