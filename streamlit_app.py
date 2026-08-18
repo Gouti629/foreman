@@ -74,6 +74,19 @@ def badge(text: str, color: str) -> str:
     return f":{color}[**{text}**]"
 
 
+def esc(text) -> str:
+    """Escape markdown-special characters in data/LLM-derived text before it's
+    interpolated into a markdown string. Without this, e.g. a finding like
+    "premium of $13,500 falls within range ($9,000-$15,500)" gets silently
+    mangled — Streamlit's markdown renderer treats text between two `$` as
+    LaTeX math. Mirrors the escapeHtml() the original static dashboard used
+    for the same reason: never let data render as markup."""
+    text = str(text)
+    for ch in ("\\", "$", "*", "_", "`", "#"):
+        text = text.replace(ch, "\\" + ch)
+    return text
+
+
 def load_submissions():
     with get_conn() as conn:
         subs = list_submissions(conn)
@@ -88,14 +101,14 @@ def render_specialist_card(v: dict):
             f"{badge(v['overall_severity'], SEVERITY_COLOR.get(v['overall_severity'], 'gray'))} "
             f"· confidence {v['overall_confidence'] * 100:.0f}%"
         )
-        st.write(v["summary"])
+        st.markdown(esc(v["summary"]))
         if v["findings"]:
             for f in v["findings"]:
                 st.markdown(
                     f"- {badge(f['severity'], SEVERITY_COLOR.get(f['severity'], 'gray'))} "
-                    f"(confidence {f['confidence'] * 100:.0f}%) — {f['finding']}"
+                    f"(confidence {f['confidence'] * 100:.0f}%) — {esc(f['finding'])}"
                 )
-                st.caption(f"citation: `{f['citation']['field']}` — \"{f['citation']['excerpt']}\"")
+                st.caption(f"citation: `{esc(f['citation']['field'])}` — \"{esc(f['citation']['excerpt'])}\"")
         else:
             st.caption("No findings — nothing to flag.")
         if v.get("dropped_findings"):
@@ -113,7 +126,7 @@ def render_trace(trace: dict):
     decision = trace["decision"]
     st.markdown(f"## {badge(decision['decision'].upper(), DECISION_COLOR.get(decision['decision'], 'gray'))}")
     st.progress(decision["confidence"], text=f"Combined confidence: {decision['confidence'] * 100:.0f}%")
-    st.write(decision["rationale"])
+    st.markdown(esc(decision["rationale"]))
 
     st.divider()
     st.subheader("Orchestration trace")
@@ -124,7 +137,7 @@ def render_trace(trace: dict):
             " + ".join(SPECIALIST_LABELS.get(n, n) for n in names) if names else "skipped"
         )
         st.markdown(f"**{phase_title}**")
-        st.caption(step["reason"])
+        st.caption(esc(step["reason"]))
         if not names:
             st.info("Pricing check skipped this phase — see reason above.")
         for name in names:
@@ -180,30 +193,47 @@ def main():
         st.info("No submissions match the current filter. Pick \"all\" in the sidebar to see everything.")
         return
 
-    by_id = {s["submission_id"]: s for s in submissions}
+    # Filtering can exclude whatever was previously selected — always fall back to the
+    # first visible submission rather than leaving the main panel with a stale/invalid
+    # selection (or, on first load, no selection at all).
+    visible_ids = [s["submission_id"] for s in submissions]
+    if st.session_state.get("selected_id") not in visible_ids:
+        st.session_state.selected_id = visible_ids[0]
 
-    def _option_label(sid: str) -> str:
-        s = by_id[sid]
-        run = s["_latest_run"]
-        label = f"{s['business_name']} ({sid}) — known: {s.get('known_label', '—')}"
-        if run:
-            label += f" · last run: {run['decision']['decision']}"
-        return label
+    def _select(sid: str):
+        # Runs before the rerun triggered by the click, so is_selected below
+        # already reflects the new selection on the very same render pass —
+        # unlike updating session_state inside an `if button:` block, which
+        # lags one run behind (the just-clicked row would render unselected).
+        st.session_state.selected_id = sid
 
-    sub_id = st.sidebar.selectbox(
-        "Submission",
-        options=list(by_id.keys()),
-        format_func=_option_label,
-    )
+    for sub in submissions:
+        run = sub["_latest_run"]
+        decision = run["decision"]["decision"] if run else None
+        is_selected = sub["submission_id"] == st.session_state.selected_id
+        st.sidebar.button(
+            esc(sub["business_name"]),
+            key=f"sel_{sub['submission_id']}",
+            use_container_width=True,
+            type="primary" if is_selected else "secondary",
+            on_click=_select,
+            args=(sub["submission_id"],),
+        )
+        caption = f"{sub['submission_id']} · known: {sub.get('known_label', '—')}"
+        if decision:
+            caption += f" · last run: {decision}"
+        st.sidebar.caption(caption)
+
+    sub_id = st.session_state.selected_id
     with get_conn() as conn:
         submission = get_submission(conn, sub_id)
         runs = list_runs(conn, sub_id)
     trace = runs[0] if runs else None
 
-    st.header(submission["business_name"])
+    st.header(esc(submission["business_name"]))
     st.caption(
-        f"{submission['business_type']} · {submission['industry_class_code']} · "
-        f"{submission['location']['city']}, {submission['location']['state']} · "
+        f"{esc(submission['business_type'])} · {esc(submission['industry_class_code'])} · "
+        f"{esc(submission['location']['city'])}, {esc(submission['location']['state'])} · "
         f"${submission['annual_revenue']:,} revenue · {submission['employee_count']} employees"
     )
 
@@ -213,7 +243,7 @@ def main():
             try:
                 new_trace = asyncio.run(run_submission(submission, persist=True))
             except Exception as e:
-                st.error(f"Run failed: {e}. Check that ANTHROPIC_API_KEY is set correctly in Secrets.")
+                st.error(f"Run failed: {esc(e)}. Check that ANTHROPIC_API_KEY is set correctly in Secrets.")
         if new_trace:
             st.rerun()
 
